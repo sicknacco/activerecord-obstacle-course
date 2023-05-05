@@ -55,6 +55,7 @@ group :development, :test do
   gem 'shoulda-matchers'
   gem 'factory_bot_rails'
   gem 'bullet'
+  gem 'net-http'
 end
 
 group :development do
