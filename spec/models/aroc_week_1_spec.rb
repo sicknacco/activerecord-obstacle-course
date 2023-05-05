@@ -79,60 +79,60 @@ describe 'ActiveRecord Obstacle Course, Week 1' do
     expect(orders_of_700_and_1000.count).to eq(2)
   end
 
-  xit '5. finds multiple items by id' do
+  it '5. finds multiple items by id' do
     ids_to_find = [@item_1.id, @item_2.id, @item_4.id]
     expected_objects = [@item_1, @item_4, @item_2]
 
     # ----------------------- Using Ruby -------------------------
-    items = Item.all.select { |item| ids_to_find.include?(item.id) }
+    # items = Item.all.select { |item| ids_to_find.include?(item.id) }
     # ------------------------------------------------------------
 
     # ------------------ Using ActiveRecord ----------------------
-    # Solution goes here
+    items = Item.where(id: ids_to_find)
     # ------------------------------------------------------------
 
     # Expectation
     expect(items).to eq(expected_objects)
   end
 
-  xit '6. finds multiple orders by id' do
+  it '6. finds multiple orders by id' do
     ids_to_find = [@order_1.id, @order_3.id, @order_5.id, @order_7.id]
 
     # ----------------------- Using Ruby -------------------------
-    orders = Order.all.select { |order| ids_to_find.include?(order.id) }
+    # orders = Order.all.select { |order| ids_to_find.include?(order.id) }
     # ------------------------------------------------------------
 
     # ------------------ Using ActiveRecord ----------------------
-    # Solution goes here
+    orders = Order.where(id: ids_to_find)
     # ------------------------------------------------------------
 
     # Expectation
     expect(orders).to eq([@order_3, @order_5, @order_1, @order_7])
   end
 
-  xit '7. finds orders with an amount between 700 and 1000' do
+  it '7. finds orders with an amount between 700 and 1000' do
     expected_result = [@order_11, @order_13, @order_8, @order_10, @order_15, @order_14, @order_12]
     # ----------------------- Using Ruby -------------------------
-    orders_between_700_and_1000 = Order.all.select { |order| order.amount >= 700 && order.amount <= 1000 }
+    # orders_between_700_and_1000 = Order.all.select { |order| order.amount >= 700 && order.amount <= 1000 }
     # ------------------------------------------------------------
 
     # ------------------ Using ActiveRecord ----------------------
-    # Solution goes here
+    orders_between_700_and_1000 = Order.where('amount >= 700 and amount <= 1000')
     # ------------------------------------------------------------
 
     # Expectation
     expect(orders_between_700_and_1000).to eq(expected_result)
   end
 
-  xit '8. finds orders with an amount less than 550' do
+  it '8. finds orders with an amount less than 550' do
     expected_result = [@order_3, @order_2, @order_1, @order_4]
 
     # ----------------------- Using Ruby -------------------------
-    orders_less_than_550 = Order.all.select { |order| order.amount < 550 }
+    # orders_less_than_550 = Order.all.select { |order| order.amount < 550 }
     # ------------------------------------------------------------
 
     # ------------------ Using ActiveRecord ----------------------
-    # Solution goes here
+    orders_less_than_550 = Order.where('amount < 550')
     # ------------------------------------------------------------
 
     # Expectation
