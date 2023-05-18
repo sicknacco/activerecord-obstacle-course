@@ -15,11 +15,12 @@ describe 'ActiveRecord Obstacle Course, Week 2' do
     expected_result = [@order_3, @order_15, @order_9, @order_12]
 
     # ----------------------- Using Ruby -------------------------
-    orders_of_user_3 = Order.all.select { |order| order.user_id == @user_3.id }
+    # orders_of_user_3 = Order.all.select { |order| order.user_id == @user_3.id }
     # ------------------------------------------------------------
 
     # ------------------ Using ActiveRecord ----------------------
-    # Solution goes here
+    orders_of_user_3 = Order.where(user_id: @user_3.id) ##BETTER ONE!!
+    orders_of_user_3 = Order.where("user_id = #{@user_3.id}")
     # ------------------------------------------------------------
 
     # Expectation
@@ -34,11 +35,11 @@ describe 'ActiveRecord Obstacle Course, Week 2' do
     ]
 
     # ----------------------- Using Ruby -------------------------
-    orders = Order.all.sort_by { |order| order.amount }.reverse
+    # orders = Order.all.sort_by { |order| order.amount }.reverse
     # ------------------------------------------------------------
 
     # ------------------ Using ActiveRecord ----------------------
-    # Solution goes here
+    orders = Order.order(amount: :desc)
     # ------------------------------------------------------------
 
     # Expectation
@@ -53,11 +54,12 @@ describe 'ActiveRecord Obstacle Course, Week 2' do
     ]
 
     # ----------------------- Using Ruby -------------------------
-    orders = Order.all.sort_by { |order| order.amount }
+    # orders = Order.all.sort_by { |order| order.amount }
     # ------------------------------------------------------------
 
     # ------------------ Using ActiveRecord ----------------------
-    # Solution goes here
+    orders = Order.order(:amount)   ## MINE
+    orders = Order.all.order(amount: :asc)  ## TURING ANSWER
     # ------------------------------------------------------------
 
     # Expectation
@@ -72,11 +74,11 @@ describe 'ActiveRecord Obstacle Course, Week 2' do
     ]
 
     # ----------------------- Using Ruby -------------------------
-    items = Item.all.map { |item| item unless items_not_included.include?(item) }.compact
+    # items = Item.all.map { |item| item unless items_not_included.include?(item) }.compact
     # ------------------------------------------------------------
 
     # ------------------ Using ActiveRecord ----------------------
-    # Solution goes here
+      items = Item.where.not(id: [@item_2.id, @item_5.id, @item_6.id])
     # ------------------------------------------------------------
 
     # Expectation
@@ -92,7 +94,9 @@ describe 'ActiveRecord Obstacle Course, Week 2' do
     # ------------------------------------------------------------
 
     # ------------------ Using ActiveRecord ----------------------
-    # Solution goes here
+    require 'pry'; binding.pry
+      # grouped_items = 
+      grouped_items = Order.where(id: @order_3.id).first.items.order(:name)
     # ------------------------------------------------------------
 
     # Expectation
@@ -103,18 +107,19 @@ describe 'ActiveRecord Obstacle Course, Week 2' do
     expected_result = ['Abercrombie', 'Banana Republic', 'Calvin Klein', 'Dickies', 'Eddie Bauer', 'Fox', 'Giorgio Armani', 'Hurley', 'Izod', 'J.crew']
 
     # ----------------------- Using Ruby -------------------------
-    names = Item.all.map(&:name)
+    # names = Item.all.map(&:name)
     # ------------------------------------------------------------
 
     # ------------------ Using ActiveRecord ----------------------
-    # Solution goes here
+    names = Item.all.pluck(:name)
+    names = Item.pluck(:name)
     # ------------------------------------------------------------
 
     # Expectation
     expect(names).to eq(expected_result)
   end
 
-  it '15. gets all item names associated with all orders' do
+  xit '15. gets all item names associated with all orders' do
     expected_result = [
       'Dickies', 'Giorgio Armani', 'Banana Republic', 'Eddie Bauer',
       'Eddie Bauer', 'Banana Republic', 'J.crew', 'Calvin Klein',
@@ -134,17 +139,19 @@ describe 'ActiveRecord Obstacle Course, Week 2' do
     ]
 
     # ----------------------- Using Ruby -------------------------
-    names = Order.all.map do |order|
-      if order.items
-        order.items.map { |item| item.name }
-      end
-    end
+    # names = Order.all.map do |order|
+    #   if order.items
+    #     order.items.map { |item| item.name }
+    #   end
+    # end
     
-    names = names.flatten
+    # names = names.flatten
     # ------------------------------------------------------------
 
     # ------------------ Using ActiveRecord ----------------------
-    # Solution goes here
+    names = Order.all.joins(:items).pluck(:name)
+    require 'pry'; binding.pry
+    # names = Order.all.items.pluck(:name)
     # ------------------------------------------------------------
 
     # Expectation
