@@ -94,8 +94,7 @@ describe 'ActiveRecord Obstacle Course, Week 2' do
     # ------------------------------------------------------------
 
     # ------------------ Using ActiveRecord ----------------------
-    require 'pry'; binding.pry
-      # grouped_items = 
+      # Why do we need the .first?
       grouped_items = Order.where(id: @order_3.id).first.items.order(:name)
     # ------------------------------------------------------------
 
@@ -119,7 +118,7 @@ describe 'ActiveRecord Obstacle Course, Week 2' do
     expect(names).to eq(expected_result)
   end
 
-  xit '15. gets all item names associated with all orders' do
+  it '15. gets all item names associated with all orders' do
     expected_result = [
       'Dickies', 'Giorgio Armani', 'Banana Republic', 'Eddie Bauer',
       'Eddie Bauer', 'Banana Republic', 'J.crew', 'Calvin Klein',
@@ -150,8 +149,8 @@ describe 'ActiveRecord Obstacle Course, Week 2' do
 
     # ------------------ Using ActiveRecord ----------------------
     names = Order.all.joins(:items).pluck(:name)
-    require 'pry'; binding.pry
-    # names = Order.all.items.pluck(:name)
+
+    ## Don't fully understand why we need the joins here
     # ------------------------------------------------------------
 
     # Expectation
