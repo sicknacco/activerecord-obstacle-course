@@ -27,8 +27,9 @@ describe 'ActiveRecord Obstacle Course, Week 3' do
     # ------------------------------------------------------------
 
     # ------------------ Using ActiveRecord ----------------------
-    # Solution goes here
-    # ------------------------------------------------------------
+    users = User.joins(orders: :items).where("item_id = #{@item_8.id}").distinct.pluck(:name) ## << Mine 
+    users = User.joins(:orders, :order_items).where("order_items.item_id = #{@item_8.id}").order(:name).distinct.pluck(:name) ## << Turing
+    # -----------------------------------------------------------
 
     # Expectation
     expect(users).to eq(expected_result)
@@ -42,7 +43,7 @@ describe 'ActiveRecord Obstacle Course, Week 3' do
     # ------------------------------------------------------------
 
     # ------------------ Using ActiveRecord ----------------------
-    # Solution goes here
+    names = Order.last.items.pluck(:name)
     # ------------------------------------------------------------
 
     # Expectation
