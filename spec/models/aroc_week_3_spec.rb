@@ -98,7 +98,8 @@ describe 'ActiveRecord Obstacle Course, Week 3' do
     # -----------------------------------------------------------
 
     # ------------------ Using ActiveRecord ----------------------
-    average = Order.where("user_id = #{@user_3.id}").average(:amount)
+    average = Order.where("user_id = #{@user_3.id}").average(:amount) ## << Mine
+    average = @user_3.orders.average(:amount) ## Alternate
     # ------------------------------------------------------------
 
     # Expectation
