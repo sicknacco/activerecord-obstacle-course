@@ -67,7 +67,8 @@ describe 'ActiveRecord Obstacle Course, Week 3' do
     # ------------------------------------------------------------
 
     # ------------------ Using ActiveRecord ----------------------
-    items_for_user_3_third_order = User.joins(orders: :items).where("user_id = #{@user_3.id}").pluck(:name)
+    items_for_user_3_third_order = User.joins(orders: :items).where("user_id = #{@user_3.id}").pluck(:name) ## << Mine
+    items_for_user_3_third_order = Order.where(user_id: @user_3.id).third.items.pluck(:name) ## Turing
     # ------------------------------------------------------------
 
     # Expectation
